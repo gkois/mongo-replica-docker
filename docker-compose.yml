@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  mongodb:
+    build: ./setup
+    container_name: ${MONGO_CONTAINER_NAME}
+    restart: ${MONGO_RESTART_POLICY}
+    env_file:
+      - .env
+    volumes:
+      - "${MONGO_DATA_ROOT_PATH}/mongo-primary:/var/lib/mongo1"
+      - "${MONGO_DATA_ROOT_PATH}/mongo-secondary:/var/lib/mongo2"
+      - "${MONGO_DATA_ROOT_PATH}/mongo-arbiter:/var/lib/mongo3"
+    ports:
+      - ${MONGO_PRIMARY_PORT}:27017
+      - ${MONGO_SECONDARY_PORT}:27018
+      - ${MONGO_ARBITER_PORT}:27019
